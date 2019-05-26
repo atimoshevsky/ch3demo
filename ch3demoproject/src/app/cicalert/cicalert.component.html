@@ -1,16 +1,70 @@
 <p>
+  REFERENCE DATA
+</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">Customer ID</div>
+    <div class="col-sm">Customer Name</div>
+    <div class="col-sm">Address</div>
+    <div class="col-sm">Actions</div>
+  </div>
+  <div *ngFor="let item of referenceDataList" class="row">
+    <div class="col-sm">
+      {{item.customerID}}
+    </div>
+    <div class="col-sm">
+      {{item.customerName}}
+    </div>
+    <div class="col-sm">
+      {{item.address}}
+    </div>
+    <div class="col-sm">
+       
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-sm">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Customer ID">
+        </div>
+      </div>
+      <div class="col-sm">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Customer Name">
+        </div>
+      </div>
+      <div class="col-sm">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Address">
+        </div>
+      </div>
+      <div class="col-sm">
+        <button mat-raised-button color="primary" (click)="onMineClicked()">Load</button>
+      </div>
+    </div>
+</div>
+<p>
   CIC ALERTS
 </p>
 
 <div class="container">
   <div class="row">
+    <div class="col-sm">Customer ID</div>
+    <div class="col-sm">Customer Name</div>
     <div class="col-sm">Created date</div>
     <div class="col-sm">From Value</div>
     <div class="col-sm">To Value</div>
     <div class="col-sm">Status</div>
+    <div class="col-sm">Action</div>
   </div>
 
   <div *ngFor="let item of cicAlertList" class="row">
+    <div class="col-sm">
+      {{item.customerID}}
+    </div>
+    <div class="col-sm">
+      {{item.customerName}}
+    </div>
     <div class="col-sm">
       {{item.createdDate}}
     </div>
@@ -23,11 +77,26 @@
     <div class="col-sm">
       {{item.status}}
     </div>
+    <div class="col-sm">
+      <button mat-raised-button color="primary" (click)="onMineClicked()">Edit</button>
+    </div>
   </div>
 
   <div class="row">
     <div class="col-sm">
-
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Customer Name">
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Customer Name">
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="">
+      </div>
     </div>
     <div class="col-sm">
       <div class="form-group">
@@ -40,9 +109,12 @@
       </div>
     </div>
     <div class="col-sm">
-
-      <button mat-raised-button color="primary" (click)="onMineClicked()">Add</button>
-
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Status">
+      </div>
+    </div>
+    <div class="col-sm">
+      <button mat-raised-button color="primary" (click)="onMineClicked()">Load</button>
     </div>
   </div>
 </div>
