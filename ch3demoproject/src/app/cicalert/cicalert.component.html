@@ -1,176 +1,199 @@
-<p>
-  REFERENCE DATA
-</p>
 <div class="container">
-  <div class="row">
-    <div class="col-sm">Date</div>
-    <div class="col-sm">Customer ID</div>
-    <div class="col-sm">Customer Name</div>
-    <div class="col-sm">Address</div>
-    <div class="col-sm">Actions</div>
-  </div>
-  <div *ngFor="let item of referenceDataList" class="row">
-    <div class="col-sm">
-      {{item.loadedDate}}
-    </div>
-    <div class="col-sm">
-      {{item.customerID}}
-    </div>
-    <div class="col-sm">
-      {{item.customerName}}
-    </div>
-    <div class="col-sm">
-      {{item.address}}
-    </div>
-    <div class="col-sm">
+  <p>
+    REFERENCE DATA
+  </p>
+  <table class="table table-bordered">
+    <thead class="thead-light">
+      <tr>
+        <th>Date</th>
+        <th>Customer ID</th>
+        <th>Customer Name</th>
+        <th>Address</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of referenceDataList">
+        <td> {{item.loadedDate}}</td>
+        <td> {{item.customerID}}</td>
+        <td> {{item.customerName}}</td>
+        <td> {{item.address}}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>
+        </td>
+        <td>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Customer ID" [(ngModel)]="customerReferenceData.customerID">
+          </div>
+        </td>
+        <td>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Customer Name" [(ngModel)]="customerReferenceData.customerName">
+          </div>
+        </td>
+        <td>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Address" [(ngModel)]="customerReferenceData.address">
+          </div>
+        </td>
+        <td>
+          <div>
+            <button mat-raised-button color="primary" (click)="loadCustomer()">Load</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm"></div>
-    <div class="col-sm form-group">
-      <input type="text" class="form-control" placeholder="Customer ID" [(ngModel)]="customerReferenceData.customerID">
-    </div>
-    <div class="col-sm form-group">
-      <input type="text" class="form-control" placeholder="Customer Name" [(ngModel)]="customerReferenceData.customerName">
-    </div>
-    <div class="col-sm form-group">
-      <input type="text" class="form-control" placeholder="Address" [(ngModel)]="customerReferenceData.address">
-    </div>
-    <div class="col-sm">
-      <button mat-raised-button color="primary" (click)="loadCustomer()">Load</button>
-    </div>
-  </div>
-</div>
+  <p>
+    SC Form Data
+  </p>
+  <table class="table table-bordered">
+    <thead class="thead-light">
+      <th>Date</th>
+      <th>Customer ID</th>
+      <th>FormType</th>
+      <th>eyResult</th>
+      <th>Validation ID</th>
+      <th>ch4Status</th>
+      <th>ch3Status</th>
+      <th>Actions</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let scFormItem of scFormDataList">
+        <td>
+          {{scFormItem.loadedDate}}
+        </td>
+        <td>
+          {{scFormItem.customerID}}
+        </td>
+        <td>
+          {{scFormItem.formType}}
+        </td>
+        <td>
+          {{scFormItem.eyResult}}
+        </td>
+        <td>
+          {{scFormItem.validationIDNumber}}
+        </td>
+        <td>
+          {{scFormItem.ch4Status}}
+        </td>
+        <td>
+          {{scFormItem.ch3Status}}
+        </td>
+        <td>
+          <!-- Actions-->
+        </td>
+      </tr>
+      <tr>
+        <td>
+        </td>
+        <td>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Customer ID" [(ngModel)]="scFormData.customerID">
+          </div>
+        </td>
+        <td>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="FormType" [(ngModel)]="scFormData.formType">
+          </div>
+        </td>
+        <td>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="EY_Result" [(ngModel)]="scFormData.eyResult">
+          </div>
+        </td>
+        <td>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Validation ID Number" [(ngModel)]="scFormData.validationIDNumber">
+          </div>
+        </td>
+        <td>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="ch4Status" [(ngModel)]="scFormData.ch4Status">
+          </div>
+        </td>
+        <td>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="ch3Status" [(ngModel)]="scFormData.ch3Status">
+          </div>
+        </td>
+        <td>
+          <button mat-raised-button color="primary" (click)="loadScForm()">Load</button>
+        </td>
+      </tr>
+      <tbody>
+  </table>
+  <p>
+    CIC ALERTS
+  </p>
+  <table class="table table-bordered">
+    <thead class="thead-light">
+      <th>Date</th>
+      <th>Customer ID</th>
+      <th>Form Type</th>
+      <th>Status</th>
+      <th>From</th>
+      <th>To</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cicItem of cicAlertList">
+        <td>
+          {{cicItem.createdDate}}
+        </td>
+        <td>
+          {{cicItem.customerID}}
+        </td>
+        <td>
+          {{cicItem.formType}}
+        </td>
+        <td>
+          {{cicItem.status}}
+        </td>
+        <td>
+          {{cicItem.fromValue}}
+        </td>
+        <td>
+          {{cicItem.toValue}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-<p>
-  SC Form Data
-</p>
-<div class="container">
-  <div class="row">
-    <div class="col-sm">Date</div>
-    <div class="col-sm">Customer ID</div>
-    <div class="col-sm">FormType</div>
-    <div class="col-sm">eyResult</div>
-    <div class="col-sm">Validation ID</div>
-    <div class="col-sm">ch4Status</div>
-    <div class="col-sm">ch3Status</div>
-    <div class="col-sm">Actions</div>
-  </div>
-  <div *ngFor="let scFormItem of scFormDataList" class="row">
-    <div class="col-sm">
-      {{scFormItem.loadedDate}}
-    </div>
-    <div class="col-sm">
-      {{scFormItem.customerID}}
-    </div>
-    <div class="col-sm">
-      {{scFormItem.formType}}
-    </div>
-    <div class="col-sm">
-      {{scFormItem.eyResult}}
-    </div>
-    <div class="col-sm">
-      {{scFormItem.validationIDNumber}}
-    </div>
-    <div class="col-sm">
-      {{scFormItem.ch4Status}}
-    </div>
-    <div class="col-sm">
-      {{scFormItem.ch3Status}}
-    </div>
-    <div class="col-sm">
-      <!-- Actions-->
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm"></div>
-    <div class="col-sm form-group">
-      <input type="text" class="form-control" placeholder="Customer ID" [(ngModel)]="scFormData.customerID">
-    </div>
-    <div class="col-sm form-group">
-      <input type="text" class="form-control" placeholder="FormType" [(ngModel)]="scFormData.formType">
-    </div>
-    <div class="col-sm form-group">
-      <input type="text" class="form-control" placeholder="EY_Result" [(ngModel)]="scFormData.eyResult">
-    </div>
-    <div class="col-sm form-group">
-      <input type="text" class="form-control" placeholder="Validation ID Number" [(ngModel)]="scFormData.validationIDNumber">
-    </div>
-    <div class="col-sm form-group">
-      <input type="text" class="form-control" placeholder="ch4Status" [(ngModel)]="scFormData.ch4Status">
-    </div>
-    <div class="col-sm form-group">
-      <input type="text" class="form-control" placeholder="ch3Status" [(ngModel)]="scFormData.ch3Status">
-    </div>
-    <div class="col-sm">
-      <button mat-raised-button color="primary" (click)="loadScForm()">Load</button>
-    </div>
-  </div>
-</div>
-<p>
-  CIC ALERTS
-</p>
+  <p>
+    TAX STATUS
+  </p>
 
-<div class="container">
-  <div class="row">
-    <div class="col-sm">Date</div>
-    <div class="col-sm">Customer ID</div>
-    <div class="col-sm">Form Type</div>
-    <div class="col-sm">Status</div>
-    <div class="col-sm">From</div>
-    <div class="col-sm">To</div>
-  </div>
-  <div *ngFor="let cicItem of cicAlertList" class="row">
-    <div class="col-sm">
-      {{cicItem.createdDate}}
-    </div>
-    <div class="col-sm">
-      {{cicItem.customerID}}
-    </div>
-    <div class="col-sm">
-      {{cicItem.formType}}
-    </div>
-    <div class="col-sm">
-      {{cicItem.status}}
-    </div>
-    <div class="col-sm">
-      {{cicItem.fromValue}}
-    </div>
-    <div class="col-sm">
-      {{cicItem.toValue}}
-    </div>
-  </div>
-</div>
+  <table class="table table-bordered">
+    <thead class="thead-light">
+      <th>Customer ID</th>
+      <th>Doc Type</th>
+      <th>Effective Date</th>
+      <th>End Date</th>
+      <th>C4 Status</th>
+    </thead>
 
-<p>
-  TAX STATUS
-</p>
-
-<div class="container">
-  <div class="row">
-    <div class="col-sm">Customer ID</div>
-    <div class="col-sm">Doc Type</div>
-    <div class="col-sm">Effective Date</div>
-    <div class="col-sm">End Date</div>
-    <div class="col-sm">C4 Status</div>
-  </div>
-  <div *ngFor="let taxStatusItem of taxStatusList" class="row">
-    <div class="col-sm">
-      {{taxStatusItem.customerID}}
-    </div>
-    <div class="col-sm">
-      {{taxStatusItem.docType}}
-    </div>
-    <div class="col-sm">
-      {{taxStatusItem.effactiveDate}}
-    </div>
-    <div class="col-sm">
-      {{taxStatusItem.endDate}}
-    </div>
-    <div class="col-sm">
-      {{taxStatusItem.ch4Status}}
-    </div>
-
-  </div>
+    <tbody>
+      <tr *ngFor="let taxStatusItem of taxStatusList">
+        <td>
+          {{taxStatusItem.customerID}}
+        </td>
+        <td>
+          {{taxStatusItem.docType}}
+        </td>
+        <td>
+          {{taxStatusItem.effactiveDate}}
+        </td>
+        <td>
+          {{taxStatusItem.endDate}}
+        </td>
+        <td>
+          {{taxStatusItem.ch4Status}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
