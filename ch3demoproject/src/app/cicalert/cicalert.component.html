@@ -3,12 +3,16 @@
 </p>
 <div class="container">
   <div class="row">
+    <div class="col-sm">Date</div>
     <div class="col-sm">Customer ID</div>
     <div class="col-sm">Customer Name</div>
     <div class="col-sm">Address</div>
     <div class="col-sm">Actions</div>
   </div>
   <div *ngFor="let item of referenceDataList" class="row">
+    <div class="col-sm">
+      {{item.loadedDate}}
+    </div>
     <div class="col-sm">
       {{item.customerID}}
     </div>
@@ -19,29 +23,90 @@
       {{item.address}}
     </div>
     <div class="col-sm">
-       
-      </div>
+
+    </div>
   </div>
   <div class="row">
-      <div class="col-sm">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Customer ID">
-        </div>
-      </div>
-      <div class="col-sm">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Customer Name">
-        </div>
-      </div>
-      <div class="col-sm">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Address">
-        </div>
-      </div>
-      <div class="col-sm">
-        <button mat-raised-button color="primary" (click)="onMineClicked()">Load</button>
-      </div>
+    <div class="col-sm"></div>
+    <div class="col-sm form-group">
+      <input type="text" class="form-control" placeholder="Customer ID" [(ngModel)]="customerReferenceData.customerID">
     </div>
+    <div class="col-sm form-group">
+      <input type="text" class="form-control" placeholder="Customer Name" [(ngModel)]="customerReferenceData.customerName">
+    </div>
+    <div class="col-sm form-group">
+      <input type="text" class="form-control" placeholder="Address" [(ngModel)]="customerReferenceData.address">
+    </div>
+    <div class="col-sm">
+      <button mat-raised-button color="primary" (click)="loadCustomer()">Load</button>
+    </div>
+  </div>
+</div>
+
+<p>
+  SC Form Data
+</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">Date</div>
+    <div class="col-sm">Customer ID</div>
+    <div class="col-sm">FormType</div>
+    <div class="col-sm">eyResult</div>
+    <div class="col-sm">Validation ID</div>
+    <div class="col-sm">ch4Status</div>
+    <div class="col-sm">ch3Status</div>
+    <div class="col-sm">Actions</div>
+  </div>
+  <div *ngFor="let scFormItem of scFormDataList" class="row">
+    <div class="col-sm">
+      {{scFormItem.loadedDate}}
+    </div>
+    <div class="col-sm">
+      {{scFormItem.customerID}}
+    </div>
+    <div class="col-sm">
+      {{scFormItem.formType}}
+    </div>
+    <div class="col-sm">
+      {{scFormItem.eyResult}}
+    </div>
+    <div class="col-sm">
+      {{scFormItem.validationIDNumber}}
+    </div>
+    <div class="col-sm">
+      {{scFormItem.ch4Status}}
+    </div>
+    <div class="col-sm">
+      {{scFormItem.ch3Status}}
+    </div>
+    <div class="col-sm">
+      <!-- Actions-->
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm"></div>
+    <div class="col-sm form-group">
+      <input type="text" class="form-control" placeholder="Customer ID" [(ngModel)]="scFormData.customerID">
+    </div>
+    <div class="col-sm form-group">
+      <input type="text" class="form-control" placeholder="FormType" [(ngModel)]="scFormData.formType">
+    </div>
+    <div class="col-sm form-group">
+      <input type="text" class="form-control" placeholder="EY_Result" [(ngModel)]="scFormData.eyResult">
+    </div>
+    <div class="col-sm form-group">
+      <input type="text" class="form-control" placeholder="Validation ID Number" [(ngModel)]="scFormData.validationIDNumber">
+    </div>
+    <div class="col-sm form-group">
+      <input type="text" class="form-control" placeholder="ch4Status" [(ngModel)]="scFormData.ch4Status">
+    </div>
+    <div class="col-sm form-group">
+      <input type="text" class="form-control" placeholder="ch3Status" [(ngModel)]="scFormData.ch3Status">
+    </div>
+    <div class="col-sm">
+      <button mat-raised-button color="primary" (click)="loadScForm()">Load</button>
+    </div>
+  </div>
 </div>
 <p>
   CIC ALERTS
@@ -49,77 +114,31 @@
 
 <div class="container">
   <div class="row">
+    <div class="col-sm">Date</div>
     <div class="col-sm">Customer ID</div>
-    <div class="col-sm">Customer Name</div>
-    <div class="col-sm">Created date</div>
-    <div class="col-sm">From Value</div>
-    <div class="col-sm">To Value</div>
+    <div class="col-sm">Form Type</div>
     <div class="col-sm">Status</div>
-    <div class="col-sm">Action</div>
+    <div class="col-sm">From</div>
+    <div class="col-sm">To</div>
   </div>
-
-  <div *ngFor="let item of cicAlertList" class="row">
+  <div *ngFor="let cicItem of cicAlertList" class="row">
     <div class="col-sm">
-      {{item.customerID}}
+      {{cicItem.createdDate}}
     </div>
     <div class="col-sm">
-      {{item.customerName}}
+      {{cicItem.customerID}}
     </div>
     <div class="col-sm">
-      {{item.createdDate}}
+      {{cicItem.formType}}
     </div>
     <div class="col-sm">
-      {{item.fromValue}}
+      {{cicItem.status}}
     </div>
     <div class="col-sm">
-      {{item.toValue}}
+      {{cicItem.fromValue}}
     </div>
     <div class="col-sm">
-      {{item.status}}
-    </div>
-    <div class="col-sm">
-      <button mat-raised-button color="primary" (click)="onMineClicked()">Edit</button>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm">
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Customer Name">
-      </div>
-    </div>
-    <div class="col-sm">
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Customer Name">
-      </div>
-    </div>
-    <div class="col-sm">
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="">
-      </div>
-    </div>
-    <div class="col-sm">
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="From Value">
-      </div>
-    </div>
-    <div class="col-sm">
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="To Value">
-      </div>
-    </div>
-    <div class="col-sm">
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Status">
-      </div>
-    </div>
-    <div class="col-sm">
-      <button mat-raised-button color="primary" (click)="onMineClicked()">Load</button>
+      {{cicItem.toValue}}
     </div>
   </div>
 </div>
-
-
-<p>
-  TAX STATUS
-</p>
