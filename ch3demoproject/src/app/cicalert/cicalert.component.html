@@ -142,3 +142,35 @@
     </div>
   </div>
 </div>
+
+<p>
+  TAX STATUS
+</p>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">Customer ID</div>
+    <div class="col-sm">Doc Type</div>
+    <div class="col-sm">Effective Date</div>
+    <div class="col-sm">End Date</div>
+    <div class="col-sm">C4 Status</div>
+  </div>
+  <div *ngFor="let taxStatusItem of taxStatusList" class="row">
+    <div class="col-sm">
+      {{taxStatusItem.customerID}}
+    </div>
+    <div class="col-sm">
+      {{taxStatusItem.docType}}
+    </div>
+    <div class="col-sm">
+      {{taxStatusItem.effactiveDate}}
+    </div>
+    <div class="col-sm">
+      {{taxStatusItem.endDate}}
+    </div>
+    <div class="col-sm">
+      {{taxStatusItem.ch4Status}}
+    </div>
+
+  </div>
+</div>

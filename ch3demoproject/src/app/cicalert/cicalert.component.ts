@@ -36,6 +36,7 @@ class CicAlert {
   status: string;
   fromValue: string;
   toValue: string;
+  validationIDNumber: string;
 
   public constructor(init?: Partial<CicAlert>) {
     Object.assign(this, init);
@@ -49,6 +50,11 @@ class TaxStatus {
   formType: string;
   ch4Status: string;
   ch3Status: string;
+  customerID: number;
+
+  public constructor(init?: Partial<TaxStatus>) {
+    Object.assign(this, init);
+  }
 }
 
 @Component({
@@ -61,9 +67,10 @@ export class CicalertComponent implements OnInit {
   customerReferenceData: ReferenceData = new ReferenceData();
   scFormData: ScFormData = new ScFormData();
 
+
   referenceDataList: Array<ReferenceData>;
   scFormDataList: Array<ScFormData>;
-
+  taxStatusList: Array<TaxStatus>;
   cicAlertList: Array<CicAlert>;
 
 
@@ -81,24 +88,47 @@ export class CicalertComponent implements OnInit {
   }
 
   createCicAlert(from: string, to: string, scForm: ScFormData) {
+    for (let i = 0; i < this.cicAlertList.length; i++) {
+      if (this.cicAlertList[i].validationIDNumber !== scForm.validationIDNumber) {
+        this.cicAlertList[i].status = 'Closed(new validation id provided)';
+      }
+    }
+
     let item = new CicAlert({
       customerID: scForm.customerID,
       formType: scForm.formType,
       fromValue: from,
       toValue: to,
       createdDate: new Date().toLocaleTimeString(),
-      status: 'OPEN'
+      status: 'Open',
+      validationIDNumber: scForm.validationIDNumber
     })
+    this.cicAlertList.push(item);
 
-
-    this.cicAlertList.push(
-      item
-    )
-    console.log(this.cicAlertList);
   }
 
-  createTaxStatus() {
+  createTaxStatus(scForm: ScFormData, docType: string) {
+    for (let i = 0; i < this.taxStatusList.length; i++) {
+      if (this.taxStatusList[i].customerID === scForm.customerID) {
+        this.taxStatusList[i].endDate = new Date().toLocaleTimeString();
+        if (docType) {
+          this.taxStatusList[i].docType = docType;
+        }
+      }
+    }
 
+    let taxStatusItem = new TaxStatus(
+      {
+        effactiveDate: new Date().toLocaleTimeString(),
+        endDate: '',
+        docType: scForm.formType,
+        ch3Status: scForm.ch3Status,
+        ch4Status: scForm.ch4Status,
+        customerID: scForm.customerID
+      }
+    )
+
+    this.taxStatusList.push(taxStatusItem);
   }
 
   loadCustomer() {
@@ -109,6 +139,7 @@ export class CicalertComponent implements OnInit {
         let scForm = this.getScForm(this.referenceDataList[i].customerID);
         if (scForm && scForm.eyResult.toLowerCase() === 'valid') {
           this.createCicAlert(this.referenceDataList[i].address, this.customerReferenceData.address, scForm);
+          this.createTaxStatus(scForm, null);
         }
 
         this.referenceDataList[i].address = this.customerReferenceData.address;
@@ -127,7 +158,6 @@ export class CicalertComponent implements OnInit {
     }
 
 
-    this.customerReferenceData.customerID = 0;
     this.customerReferenceData.customerName = '';
     this.customerReferenceData.address = '';
     this.customerReferenceData.loadedDate = '';
@@ -135,20 +165,39 @@ export class CicalertComponent implements OnInit {
 
   loadScForm() {
 
-    this.scFormDataList.push(
-      new ScFormData(
-        {
-          loadedDate: new Date().toLocaleTimeString(),
-          customerID: this.scFormData.customerID,
-          ch3Status: this.scFormData.ch3Status,
-          ch4Status: this.scFormData.ch4Status,
-          formType: this.scFormData.formType,
-          eyResult: this.scFormData.eyResult,
-          validationIDNumber: this.scFormData.validationIDNumber
-        }
-      ));
+    let itemFound = false;
 
-    this.scFormData.customerID = 0;
+    for (let i = 0; i < this.scFormDataList.length; i++) {
+      if (this.scFormData.customerID === this.scFormDataList[i].customerID) {
+        itemFound = true;
+        this.scFormDataList[i].ch3Status = this.scFormData.ch3Status;
+        this.scFormDataList[i].ch4Status = this.scFormData.ch4Status;
+        this.scFormDataList[i].eyResult = this.scFormData.eyResult;
+        if (this.scFormData.eyResult.toLowerCase() === 'valid' && this.scFormData.validationIDNumber !== this.scFormDataList[i].validationIDNumber) {
+
+          this.createTaxStatus(this.scFormData, null);
+        }
+        this.scFormDataList[i].formType = this.scFormData.formType;
+        this.scFormDataList[i].validationIDNumber = this.scFormData.validationIDNumber;
+        this.scFormDataList[i].loadedDate = new Date().toLocaleTimeString();
+      }
+    }
+
+    if (!itemFound) {
+      this.scFormDataList.push(
+        new ScFormData(
+          {
+            loadedDate: new Date().toLocaleTimeString(),
+            customerID: this.scFormData.customerID,
+            ch3Status: this.scFormData.ch3Status,
+            ch4Status: this.scFormData.ch4Status,
+            formType: this.scFormData.formType,
+            eyResult: this.scFormData.eyResult,
+            validationIDNumber: this.scFormData.validationIDNumber
+          }
+        ));
+    }
+
     this.scFormData.formType = '';
     this.scFormData.ch3Status = '';
     this.scFormData.ch4Status = '';
@@ -156,11 +205,13 @@ export class CicalertComponent implements OnInit {
     this.scFormData.validationIDNumber = '';
     this.scFormData.loadedDate = '';
   }
+
   ngOnInit() {
 
     this.cicAlertList = new Array<CicAlert>();
     this.referenceDataList = new Array<ReferenceData>();
     this.scFormDataList = new Array<ScFormData>();
+    this.taxStatusList = new Array<TaxStatus>();
   }
 
 }
