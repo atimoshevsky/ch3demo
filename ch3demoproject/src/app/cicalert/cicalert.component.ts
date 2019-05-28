@@ -64,6 +64,8 @@ class TaxStatus {
 })
 export class CicalertComponent implements OnInit {
 
+  after24Hours: boolean = false;
+  after90Days: boolean = false;
   customerReferenceData: ReferenceData = new ReferenceData();
   scFormData: ScFormData = new ScFormData();
 
@@ -76,6 +78,22 @@ export class CicalertComponent implements OnInit {
 
   constructor() {
 
+  }
+
+  clickAfter90Days() {
+    this.after90Days = true;
+  }
+  clickAfter24Hours() {
+    this.after24Hours = true;
+
+    for (let i = 0; i < this.cicAlertList.length; i++) {
+      if (this.cicAlertList[i].status.toLowerCase() === 'open') {
+        let scForm = this.getScForm(this.cicAlertList[i].customerID);
+        scForm.eyResult = 'Invalid';
+        this.createTaxStatus(scForm, 'undocumented');
+      }
+
+    }
   }
 
   getScForm(customerID: number): ScFormData {
@@ -119,9 +137,7 @@ export class CicalertComponent implements OnInit {
     for (let i = 0; i < this.taxStatusList.length; i++) {
       if (this.taxStatusList[i].customerID === scForm.customerID) {
         this.taxStatusList[i].endDate = new Date().toLocaleTimeString();
-        if (docType) {
-          this.taxStatusList[i].docType = docType;
-        }
+
       }
     }
 
@@ -129,7 +145,7 @@ export class CicalertComponent implements OnInit {
       {
         effactiveDate: new Date().toLocaleTimeString(),
         endDate: '',
-        docType: scForm.formType,
+        docType: docType === null ? scForm.formType : docType,
         ch3Status: scForm.ch3Status,
         ch4Status: scForm.ch4Status,
         customerID: scForm.customerID
@@ -183,9 +199,9 @@ export class CicalertComponent implements OnInit {
         this.scFormDataList[i].ch3Status = this.scFormData.ch3Status;
         this.scFormDataList[i].ch4Status = this.scFormData.ch4Status;
         this.scFormDataList[i].eyResult = this.scFormData.eyResult;
-        if (this.scFormData.eyResult.toLowerCase() === 'valid' && 
-            this.scFormData.validationIDNumber !== this.scFormDataList[i].validationIDNumber &&
-            this.cicAlertList.length > 0) {
+        if (this.scFormData.eyResult.toLowerCase() === 'valid' &&
+          this.scFormData.validationIDNumber !== this.scFormDataList[i].validationIDNumber &&
+          this.cicAlertList.length > 0) {
 
           this.createTaxStatus(this.scFormData, null);
         }

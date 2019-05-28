@@ -1,4 +1,25 @@
 <div class="container">
+  <table class="table table-bordered">
+    <tr>
+      <td>
+          <input
+          type="checkbox"
+          [checked]="after24Hours"
+          (change)="clickAfter24Hours()"
+          [disabled]="after24Hours"
+          >
+        <span> After 24 hours</span>
+      </td>
+      <td>
+          <input
+          type="checkbox"
+          [checked]="after90Days"
+          (change)="clickAfter90Days()"
+          [disabled]="after90Days">
+        <span>  After 90 days</span>
+      </td>
+    </tr>
+  </table>
   <p>
     REFERENCE DATA
   </p>
