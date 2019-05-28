@@ -87,10 +87,18 @@ export class CicalertComponent implements OnInit {
     return null;
   }
 
+
+
   createCicAlert(from: string, to: string, scForm: ScFormData) {
     for (let i = 0; i < this.cicAlertList.length; i++) {
-      if (this.cicAlertList[i].validationIDNumber !== scForm.validationIDNumber) {
-        this.cicAlertList[i].status = 'Closed(new validation id provided)';
+
+      if (this.cicAlertList[i].status.toLowerCase() === 'open') {
+        if (this.cicAlertList[i].validationIDNumber !== scForm.validationIDNumber) {
+          this.cicAlertList[i].status = 'Closed(new validation id provided)';
+        }
+        else {
+          this.cicAlertList[i].status = 'Closed(new reference data provided)';
+        }
       }
     }
 
@@ -138,8 +146,10 @@ export class CicalertComponent implements OnInit {
         itemFound = true;
         let scForm = this.getScForm(this.referenceDataList[i].customerID);
         if (scForm && scForm.eyResult.toLowerCase() === 'valid') {
+          if (this.cicAlertList.length === 0) {
+            this.createTaxStatus(scForm, null);
+          }
           this.createCicAlert(this.referenceDataList[i].address, this.customerReferenceData.address, scForm);
-          this.createTaxStatus(scForm, null);
         }
 
         this.referenceDataList[i].address = this.customerReferenceData.address;
@@ -173,7 +183,9 @@ export class CicalertComponent implements OnInit {
         this.scFormDataList[i].ch3Status = this.scFormData.ch3Status;
         this.scFormDataList[i].ch4Status = this.scFormData.ch4Status;
         this.scFormDataList[i].eyResult = this.scFormData.eyResult;
-        if (this.scFormData.eyResult.toLowerCase() === 'valid' && this.scFormData.validationIDNumber !== this.scFormDataList[i].validationIDNumber) {
+        if (this.scFormData.eyResult.toLowerCase() === 'valid' && 
+            this.scFormData.validationIDNumber !== this.scFormDataList[i].validationIDNumber &&
+            this.cicAlertList.length > 0) {
 
           this.createTaxStatus(this.scFormData, null);
         }
